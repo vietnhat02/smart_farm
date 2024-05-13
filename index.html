@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Garden</title>
+    <link rel="icon" type="image/x-icon" href="/img/icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id= "header">
+        <ul>
+             <li><b>Smart Farming</b></li>
+             <img src="img\logo1.png" id="logo">
+        </ul>
+    </div>
+    <div id= "main"> 
+        <div id="top">
+          <div id="time"> </div>
+           <script>
+            var time_input = null;
+            var a_gio = null;
+            var a_phut = null;
+            var a_giay = 10;
+            var t = null;
+            var f = true;
+            function dongho() {
+                var time = new Date();
+                var gio = time.getHours();
+                var phut = time.getMinutes();
+                var giay = time.getSeconds();
+                if (gio < 10) 
+                gio = "0" + gio;
+                if (phut < 10) 
+                phut = "0" + phut;
+                if (giay < 10) 
+                giay = "0" + giay;
+                document.getElementById("time").innerHTML = gio + ":" + phut + ":" + giay;
+                if(time_input != null){
+                    a_gio = time_input.slice(0, 2);
+                    a_phut = time_input.slice(3, 5);
+                    if(f){
+                        a_giay = 0;
+                        t = giay;
+                        f = false;
+                    }
+                }
+                // console.log(a_gio + ":" + a_phut);
+                if(a_gio != null){
+                    if(Number(gio) == Number(a_gio) && Number(phut) == Number(a_phut) && a_giay <= 10){
+                        time_input = null;
+                        document.getElementById("hiddentext").innerHTML = 1;
+                        // console.log(a_giay + "!");
+                        if(t != giay){
+                            a_giay += 1;
+                        }
+                    }
+                    else{
+                        document.getElementById("hiddentext").innerHTML = 0;
+                        // console.log(0);
+                        a_gio = null;
+                        a_phut = null;
+                        a_giay = 10;
+                        f = true;
+                    }
+                }
+                setTimeout("dongho()", 1000);
+            };
+            function getValue(){
+                const timeInput = document.getElementById("timeInput");
+                const selectedTime = timeInput.value; 
+                // console.log(selectedTime);
+                time_input = selectedTime;
+            }
+            dongho();
+          </script>
+          <div id="nd"> 
+            <h1><img src="img\nhiet-ke.png" id="Temperature"></h1>
+            <h2>Nhiệt độ</h2>
+          </div>
+          <div id="da"> 
+            <h3><img src="img\moisture.png" id="Moisture"></h3>
+            <h4>Độ ẩm đất</h4>
+          </div>
+          <div id="lm"> 
+            <h5><img src="img\humidity.jpg" id="Humidity"></h5>
+            <h6>Độ ẩm không khí</h6>
+          </div>
+          <div class="thongso">
+            <h7 id="nhietdo"></h7>
+            <h7 id="doamdat"></h7>
+            <h7 id="doamkk"></h7>
+          </div>
+        </div>
+        <div id="bot">
+            <h1><center><img src="img\dongho_false.png"id="alarm"></center>
+                <input id="timeInput" type="time">
+                <button id="btn1" type="button" onclick="getValue()"> Send </button>
+            </h1>
+            <h1><center><img src="img\tuoi_false.png"id="hose"></center>
+                <button type="button" id="btn3" >On</button>
+                <button type="button" id="btn4" >Off</button><br><br>
+            </h1>
+            <h1><center><img src="img\doamdat.png"id="humi"></center>
+                <input type="number" id="txtMoisture" min="1" max="100" step="1" />
+                <button id="btn2" type="button" > Send </button>
+            </h1>
+            <h2 id="hengio_time">Hẹn giờ tưới bằng thời gian</h2>
+            <h3 id="text_hose">Vòi tưới</h3>
+            <h4 id="hengio_moisture">Hẹn giờ tưới bằng độ ẩm đất </h4>
+        </div>
+    </div>
+    <div id= "footer">
+         <ul>
+              <li> Họ và tên : Nguyễn Nhật Trường - MSSV : 21139086 - Email : nhattruong05022003@gmail.com</li>
+              <li> Họ và tên : Trần Đào Anh Trung - MSSV : 21139085 - Email : trandaoanhtrung@gmail.com</li>
+              <li> Họ và tên : Phạm Việt Nhật - MSSV : 21139038 - Email : vietnhat1202@gmail.com</li>
+        </ul>
+        <h1 id="hiddentext">0</h1>
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
